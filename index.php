@@ -48,15 +48,15 @@ if (isset($_POST['login'])) {
 		if ($row['login_rank'] == 'admin') {
 
 			$_SESSION['admin_email'] = $row['email'];
-			header('location:https://www.googl.com');
+			header('location:admin/admin_page.php');
 		} elseif ($row['login_rank'] == 'customer') {
 
 			$_SESSION['customer_email'] = $row['email'];
-			header('location:/customer/customer_page.php');
+			header('location:customer/customer_page.php');
 		} elseif ($row['login_rank'] == 'farmer') {
 
 			$_SESSION['farmer_email'] = $row['email'];
-			header('location:/farmer/farmer_page.php');
+			header('location:farmer/farmer_page.php');
 		}
 	} else {
 		$error[] = 'Incorrect email or password!';
