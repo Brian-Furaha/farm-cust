@@ -61,6 +61,8 @@ if (isset($_POST['login'])) {
 	} else {
 		$error[] = 'Incorrect email or password!';
 	}
+
+    
 };
 ?>
 <!DOCTYPE html>
