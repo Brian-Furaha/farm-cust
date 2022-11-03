@@ -12,6 +12,7 @@ if (isset($_POST['signup'])) {
 	$pass = md5($_POST['password']);
 	$cpass = md5($_POST['cpassword']);
 	$role = $_POST['user_role'];
+     /*$id */
 
 	$select = " SELECT * FROM login WHERE login_email = '$email' && login_rank = '$role'";
 
@@ -25,8 +26,11 @@ if (isset($_POST['signup'])) {
 		if ($pass != $cpass) {
 			$error[] = 'Signup: password does not match!';
 		} else {
-			$insert = "INSERT INTO login(login_email, login_password, login_rank) VALUES('$email', '$pass', '$role')";
-			mysqli_query($conn, $insert);
+			$insert = "INSERT INTO login(login_email, login_password, login_rank/*,login_user_id*/) VALUES('$email', '$pass', '$role'/*,$id*/)";
+            /*$new = "INSERT INTO user(user_id, user_email) VALUES('$id', '$email')";
+            */
+			mysqli_query($conn, $insert/** $new */);
+            
 			header('location:index.php');
 		}
 	}
@@ -45,6 +49,18 @@ if (isset($_POST['login'])) {
 
 		$row = mysqli_fetch_array($result);
 
+        /*
+        $data = SELECT * FROM USER WHERE user_id = '$row['login_user_id'];
+        
+        $userdata = mysqli_query($conn, $data)
+
+        if (mysqli_num_rows($userdata) < 2) {
+
+        }else {
+            header('location:create_profile.php')
+        } 
+        */ 
+
 		if ($row['login_rank'] == 'admin') {
 
 			$_SESSION['admin_email'] = $row['email'];
@@ -62,7 +78,28 @@ if (isset($_POST['login'])) {
 		$error[] = 'Incorrect email or password!';
 	}
 
-    
+    /* 
+    function random_num($length)
+{
+
+	$text = "";
+	if ($length < 5) 
+	{
+		$length = 5;
+	}
+
+	$len = rand(4,$length);
+
+	for ($i=0; $i < $len; $i++) { 
+		// code...
+
+		$text .= rand(0,9);
+	}
+
+	return $text;
+}
+    */
+
 };
 ?>
 <!DOCTYPE html>
