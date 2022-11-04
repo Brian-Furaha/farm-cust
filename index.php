@@ -3,103 +3,85 @@
 ob_start();
 
 @include 'db/conn.php';
+@include 'functions.php';
 
 session_start();
 
+
+
 if (isset($_POST['signup'])) {
 
-	$email = mysqli_real_escape_string($conn, $_POST['email']);
-	$pass = md5($_POST['password']);
-	$cpass = md5($_POST['cpassword']);
-	$role = $_POST['user_role'];
-     /*$id */
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $pass = md5($_POST['password']);
+    $cpass = md5($_POST['cpassword']);
+    $role = $_POST['user_role'];
+    $id = random_num(20);
 
-	$select = " SELECT * FROM login WHERE login_email = '$email' && login_rank = '$role'";
+    $select = " SELECT * FROM login WHERE login_email = '$email' && login_rank = '$role'";
 
-	$result = mysqli_query($conn, $select);
+    $result = mysqli_query($conn, $select);
 
-	if (mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($result) > 0) {
 
-		$error[] = 'Signup: user already exists!';
-	} else {
+        $error[] = 'Signup: user already exists!';
+    } else {
 
-		if ($pass != $cpass) {
-			$error[] = 'Signup: password does not match!';
-		} else {
-			$insert = "INSERT INTO login(login_email, login_password, login_rank/*,login_user_id*/) VALUES('$email', '$pass', '$role'/*,$id*/)";
-            /*$new = "INSERT INTO user(user_id, user_email) VALUES('$id', '$email')";
-            */
-			mysqli_query($conn, $insert/** $new */);
+        if ($pass != $cpass) {
+            $error[] = 'Signup: password does not match!';
+        } else {
+            $insert = "INSERT INTO login(login_email, login_password, login_rank, login_user_id) VALUES('$email', '$pass', '$role', $id)";
+            $new = "INSERT INTO user(user_id, user_email) VALUES('$id', '$email')";
             
-			header('location:index.php');
-		}
-	}
+            mysqli_query(
+                $conn,
+                $insert,
+                $new 
+            );
+
+            header('location:index.php');
+        }
+    }
 };
 
 if (isset($_POST['login'])) {
 
-	$email = mysqli_real_escape_string($conn, $_POST['email']);
-	$pass = md5($_POST['password']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $pass = md5($_POST['password']);
 
-	$select = " SELECT * FROM login WHERE login_email = '$email' && login_password = '$pass'";
+    $select = " SELECT * FROM login WHERE login_email = '$email' && login_password = '$pass'";
 
-	$result = mysqli_query($conn, $select);
+    $result = mysqli_query($conn, $select);
 
-	if (mysqli_num_rows($result) > 0) {
+    if (mysqli_num_rows($result) > 0) {
 
-		$row = mysqli_fetch_array($result);
+        $row = mysqli_fetch_array($result);
 
-        /*
-        $data = SELECT * FROM USER WHERE user_id = '$row['login_user_id'];
+        $data = "SELECT * FROM user WHERE user_id = $row['login_user_id']";
         
-        $userdata = mysqli_query($conn, $data)
+        $userdata = mysqli_query($conn, $data);
 
         if (mysqli_num_rows($userdata) < 2) {
 
         }else {
-            header('location:create_profile.php')
-        } 
-        */ 
+            header('location:create_profile.php');
+        };
+        
+        if ($row['login_rank'] == 'admin') {
 
-		if ($row['login_rank'] == 'admin') {
+            $_SESSION['admin_email'] = $row['email'];
+            header('location:admin/admin_page.php');
+        } elseif ($row['login_rank'] == 'customer') {
 
-			$_SESSION['admin_email'] = $row['email'];
-			header('location:admin/admin_page.php');
-		} elseif ($row['login_rank'] == 'customer') {
+            $_SESSION['customer_email'] = $row['email'];
+            header('location:customer/customer_page.php');
+        } elseif ($row['login_rank'] == 'farmer') {
 
-			$_SESSION['customer_email'] = $row['email'];
-			header('location:customer/customer_page.php');
-		} elseif ($row['login_rank'] == 'farmer') {
-
-			$_SESSION['farmer_email'] = $row['email'];
-			header('location:farmer/farmer_page.php');
-		}
-	} else {
-		$error[] = 'Incorrect email or password!';
-	}
-
-    /* 
-    function random_num($length)
-{
-
-	$text = "";
-	if ($length < 5) 
-	{
-		$length = 5;
-	}
-
-	$len = rand(4,$length);
-
-	for ($i=0; $i < $len; $i++) { 
-		// code...
-
-		$text .= rand(0,9);
-	}
-
-	return $text;
-}
-    */
-
+            $_SESSION['farmer_email'] = $row['email'];
+            header('location:farmer/farmer_page.php');
+        }
+    } else {
+        $error[] = 'Incorrect email or password!';
+    };
 };
 ?>
 <!DOCTYPE html>
@@ -163,12 +145,12 @@ if (isset($_POST['login'])) {
                     </div>
                 </div>
                 <?php
-				if (isset($error)) {
-					foreach ($error as $error) {
-						echo '<span class="error-msg">' . $error . '</span>';
-					};
-				};
-				?>
+                if (isset($error)) {
+                    foreach ($error as $error) {
+                        echo '<span class="error-msg">' . $error . '</span>';
+                    };
+                };
+                ?>
             </div>
         </div>
     </main>
