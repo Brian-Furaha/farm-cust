@@ -31,11 +31,11 @@ if (isset($_POST['signup'])) {
         } else {
             $insert = "INSERT INTO login(login_email, login_password, login_rank, login_user_id) VALUES('$email', '$pass', '$role', $id)";
             $new = "INSERT INTO user(user_id, user_email) VALUES('$id', '$email')";
-            
+
             mysqli_query(
                 $conn,
                 $insert,
-                $new 
+                $new
             );
 
             header('location:index.php');
@@ -56,16 +56,15 @@ if (isset($_POST['login'])) {
 
         $row = mysqli_fetch_array($result);
 
-        $data = "SELECT * FROM user WHERE user_id = $row['login_user_id']";
-        
+        $data = "SELECT * FROM user WHERE user_id = $row[login_user_id]";
+
         $userdata = mysqli_query($conn, $data);
 
         if (mysqli_num_rows($userdata) < 2) {
-
-        }else {
+        } else {
             header('location:create_profile.php');
         };
-        
+
         if ($row['login_rank'] == 'admin') {
 
             $_SESSION['admin_email'] = $row['email'];
