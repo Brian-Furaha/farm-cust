@@ -60,24 +60,25 @@ if (isset($_POST['login'])) {
 
         $userdata = mysqli_query($conn, $data);
 
-        if (mysqli_num_rows($userdata) < 2) {
-        } else {
+        if (mysqli_num_rows($userdata) < 3) {
+
             header('location:create_profile.php');
+        } else {
+
+            if ($row['login_rank'] == 'admin') {
+
+                $_SESSION['admin_email'] = $row['email'];
+                header('location:admin/admin_page.php');
+            } elseif ($row['login_rank'] == 'customer') {
+
+                $_SESSION['customer_email'] = $row['email'];
+                header('location:customer/customer_page.php');
+            } elseif ($row['login_rank'] == 'farmer') {
+
+                $_SESSION['farmer_email'] = $row['email'];
+                header('location:farmer/farmer_page.php');
+            }
         };
-
-        if ($row['login_rank'] == 'admin') {
-
-            $_SESSION['admin_email'] = $row['email'];
-            header('location:admin/admin_page.php');
-        } elseif ($row['login_rank'] == 'customer') {
-
-            $_SESSION['customer_email'] = $row['email'];
-            header('location:customer/customer_page.php');
-        } elseif ($row['login_rank'] == 'farmer') {
-
-            $_SESSION['farmer_email'] = $row['email'];
-            header('location:farmer/farmer_page.php');
-        }
     } else {
         $error[] = 'Incorrect email or password!';
     };
