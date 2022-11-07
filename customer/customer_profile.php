@@ -7,9 +7,9 @@ ob_start();
 
 session_start();
 
-$email = $_SESSION['customer_email']
+$id = $_SESSION['user_id'];
 
-if (!isset($email)) {
+if (!isset($id)) {
     header('location:../index.php');
 }
 
@@ -30,7 +30,7 @@ if (!isset($email)) {
                 $select = "SELECT * FROM user WHERE user_email = '$email'";
                 $result = mysqli_query($conn, $select);
                 if (mysqli_num_row($result) > 0) {
-                    $fetch = mysqli_fetch_assoc($select);
+                    $fetch = mysqli_fetch_assoc($result);
                 }
                 if ($fetch['image'] == '') {
                     echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">' 

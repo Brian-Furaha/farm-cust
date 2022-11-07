@@ -62,22 +62,27 @@ if (isset($_POST['login'])) {
 
         $userdata = mysqli_query($conn, $data);
 
+        $row2 = mysqli_fetch_array($userdata);
+
         if (mysqli_num_rows($userdata) < 3) {
 
             header('location:create_profile.php');
         } else {
 
             if ($row['login_rank'] == 'admin') {
-
-                $_SESSION['admin_email'] = $row['email'];
+                /** $_SESSION['admin_email'] = $row['email'];*/
+                
+                $_SESSION['user_id'] =  $row['login_user_id'];
                 header('location:admin/admin_page.php');
             } elseif ($row['login_rank'] == 'customer') {
-
-                $_SESSION['customer_email'] = $row['email'];
+                /** $_SESSION['customer_email'] = $row['email'];*/
+                
+                $_SESSION['user_id'] =  $row['login_user_id'];
                 header('location:customer/customer_page.php');
             } elseif ($row['login_rank'] == 'farmer') {
-
-                $_SESSION['farmer_email'] = $row['email'];
+                /** $_SESSION['farmer_email'] = $row['email'];*/
+                
+                $_SESSION['user_id'] =  $row['login_user_id'];
                 header('location:farmer/farmer_page.php');
             }
         };
