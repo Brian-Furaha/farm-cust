@@ -30,7 +30,7 @@ if (isset($_POST['signup'])) {
             $error[] = 'Signup: password does not match!';
         } else {
             $insert = "INSERT INTO login(login_email, login_password, login_rank, login_user_id) VALUES('$email', '$pass', '$role', $id)";
-            $new = "INSERT INTO user(user_id, user_email) VALUES('$id', '$email')";
+            $new = "INSERT INTO user(user_id) VALUES('$id')";
 
             mysqli_query(
                 $conn,
@@ -64,7 +64,7 @@ if (isset($_POST['login'])) {
 
         $row2 = mysqli_fetch_array($userdata);
 
-        if (mysqli_num_rows($userdata) < 3) {
+        if (mysqli_num_rows($userdata) < 2) {
 
             header('location:create_profile.php');
         } else {

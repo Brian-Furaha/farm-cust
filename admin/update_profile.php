@@ -17,7 +17,11 @@ if (isset($_POST['update_profile'])) {
     $pass = mysqli_real_escape_string($conn, md5($_POST['update_pass']));
     $npass = mysqli_real_escape_string($conn, md5($_POST['new_pass']));
     $cpass = mysqli_real_escape_string($conn, md5($_POST['confirm_pass']));
-    $opass = $_post['old_pass'];
+    $opass = $_POST['old_pass'];
+    $image = $_FILES['image']['name'];     
+    $image_size = $_FILES['image']['size'];
+    $image_tmp_name = $_FILES['image']['tmp_name'];    
+    $image_folder ='uploaded_img/'.$image;
 
     $select = " SELECT * FROM login WHERE login_email = '$email' && login_password = '$pass'";
     $select2 = " SELECT * FROM login WHERE login_email = '$email' && login_password = '$pass'";
@@ -51,6 +55,18 @@ if (isset($_POST['update_profile'])) {
             $error[] = 'password update successful!';
         }
     }
+
+    if(!empty($image)) {
+        if($image_size > 2000000){
+            $error[] = 'image is to large!';
+        } else {
+            $image_query = mysqli_query($conn, "UPDATE user SET image = '$image' WHERE user_id = '$id'");
+            if ($image_query) {
+                move_uploaded_file($image_tmp_name, $image_folder);
+            }
+            $error[] = 'image update successful!';
+        }
+    }
 };
 ?>
 
@@ -78,7 +94,7 @@ if (isset($_POST['update_profile'])) {
             
             ?>
 
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <?php
                     if ($fetch['image'] == '') {
                     echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">' 
@@ -103,7 +119,7 @@ if (isset($_POST['update_profile'])) {
                         <span>location :</span>
                         <input type="text" name="update_location" value="<?php echo $fetch['user_location']?>" class="box">
                         <span>update your pic :</span>
-                        <input type="file" name="update_image" accept="image/jpg, image/jpeg, image/png," class="box">
+                        <input type="file" name="image" accept="image/jpg, image/jpeg, image/png," class="box">
                     </div>
                     <div class="inputBox">
                         <input type="hidden" name="old_pass" value="<?php $fetch2['login_password'] ?>" >
