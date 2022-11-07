@@ -24,9 +24,9 @@ session_start();
         <div class="flex">
             <div class="inputbox">
                 <span>Enter your full name:</span>
-                <span>Enter your location</span>
-                <span></span>
-                <span></span>
+                <span>Enter your location:</span>
+                <span>Enter Email:</span>
+                <span>Enter Your contact number:</span>
                 <span></span>
             </div>
         </div>

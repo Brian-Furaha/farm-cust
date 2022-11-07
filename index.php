@@ -56,7 +56,9 @@ if (isset($_POST['login'])) {
 
         $row = mysqli_fetch_array($result);
 
-        $data = "SELECT * FROM user WHERE user_id = $row[login_user_id]";
+        $id = $row['login_user_id']
+
+        $data = "SELECT * FROM user WHERE user_id = $id";
 
         $userdata = mysqli_query($conn, $data);
 
