@@ -17,9 +17,7 @@ if (isset($_POST['signup'])) {
     $role = $_POST['user_role'];
     $id = random_num(20);
 
-    $select = " SELECT * FROM login WHERE login_email = '$email' && login_rank = '$role'";
-
-    $result = mysqli_query($conn, $select);
+    $result = mysqli_query($conn, " SELECT login_email, login_rank FROM login WHERE login_email = '$email' && login_rank = '$role'");
 
     if (mysqli_num_rows($result) > 0) {
 
@@ -32,11 +30,9 @@ if (isset($_POST['signup'])) {
             $insert = "INSERT INTO login(login_email, login_password, login_rank, login_user_id) VALUES('$email', '$pass', '$role', $id)";
             $new = "INSERT INTO user(user_id) VALUES('$id')";
 
-            mysqli_query(
-                $conn,
-                $insert,
-                $new
-            );
+            mysqli_query($conn, $insert);
+            mysqli_query($conn, $new);
+
 
             header('location:index.php');
         }
@@ -56,33 +52,48 @@ if (isset($_POST['login'])) {
 
         $row = mysqli_fetch_array($result);
 
-        $id = $row['login_user_id']
+        $id = $row['login_user_id'];
 
         $data = "SELECT * FROM user WHERE user_id = $id";
 
         $userdata = mysqli_query($conn, $data);
 
-        $row2 = mysqli_fetch_array($userdata);
-
         if (mysqli_num_rows($userdata) < 2) {
 
+            $row2 = mysqli_fetch_array($userdata);
+            $_SESSION['email'] = $row['login_email'];
+            $_SESSION['user_id'] = $row2['user_id'];
             header('location:create_profile.php');
         } else {
-
+            /**
+             * $type = "red";
+             * switch ($favcolor) {
+             * case "red":
+             * echo "Your favorite color is red!";
+             * break;
+             * case "blue":
+             * echo "Your favorite color is blue!";
+             * break;
+             * case "green":
+             * echo "Your favorite color is green!";
+             * break;
+             * default:
+             * echo "Your favorite color is neither red, blue, nor green!";
+             * } */
             if ($row['login_rank'] == 'admin') {
                 /** $_SESSION['admin_email'] = $row['email'];*/
-                
-                $_SESSION['user_id'] =  $row['login_user_id'];
+
+                $_SESSION['user_id'] = $row2['user_id'];
                 header('location:admin/admin_page.php');
             } elseif ($row['login_rank'] == 'customer') {
                 /** $_SESSION['customer_email'] = $row['email'];*/
-                
-                $_SESSION['user_id'] =  $row['login_user_id'];
+
+                $_SESSION['userid'] = $row2['user_id'];
                 header('location:customer/customer_page.php');
             } elseif ($row['login_rank'] == 'farmer') {
                 /** $_SESSION['farmer_email'] = $row['email'];*/
-                
-                $_SESSION['user_id'] =  $row['login_user_id'];
+
+                $_SESSION['userid'] = $row2['user_id'];
                 header('location:farmer/farmer_page.php');
             }
         };
