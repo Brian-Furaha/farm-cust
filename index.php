@@ -52,54 +52,36 @@ if (isset($_POST['login'])) {
 
         $row = mysqli_fetch_array($result);
 
-        $id = $row['login_user_id'];
-
-        $data = "SELECT * FROM user WHERE user_id = $id";
-
-        $userdata = mysqli_query($conn, $data);
-
-        if (mysqli_num_rows($userdata) < 2) {
-
-            $row2 = mysqli_fetch_array($userdata);
-            $_SESSION['email'] = $row['login_email'];
-            $_SESSION['user_id'] = $row2['user_id'];
-            header('location:create_profile.php');
-        } else {
-            /**
-             * $type = "red";
-             * switch ($favcolor) {
-             * case "red":
-             * echo "Your favorite color is red!";
-             * break;
-             * case "blue":
-             * echo "Your favorite color is blue!";
-             * break;
-             * case "green":
-             * echo "Your favorite color is green!";
-             * break;
-             * default:
-             * echo "Your favorite color is neither red, blue, nor green!";
-             * } */
-            if ($row['login_rank'] == 'admin') {
-                /** $_SESSION['admin_email'] = $row['email'];*/
-
-                $_SESSION['user_id'] = $row2['user_id'];
-                header('location:admin/admin_page.php');
-            } elseif ($row['login_rank'] == 'customer') {
-                /** $_SESSION['customer_email'] = $row['email'];*/
-
-                $_SESSION['userid'] = $row2['user_id'];
-                header('location:customer/customer_page.php');
-            } elseif ($row['login_rank'] == 'farmer') {
-                /** $_SESSION['farmer_email'] = $row['email'];*/
-
-                $_SESSION['userid'] = $row2['user_id'];
-                header('location:farmer/farmer_page.php');
-            }
-        };
-    } else {
-        $error[] = 'Incorrect email or password!';
+        /** $type = $row['login_rank'];
+         * switch ($type) {
+         * case "admin":
+         * echo "Your favorite color is red!";
+         * break;
+         * case "blue":
+         * echo "Your favorite color is blue!";
+         * break;
+         * case "green":
+         * echo "Your favorite color is green!";
+         * break;
+         * default:
+         * echo "Your favorite color is neither red, blue, nor green!";
+         * } */
+        if ($row['login_rank'] == 'admin') {
+            $_SESSION['admin_email'] = $row['login_email'];
+            $_SESSION['user_id'] = $row['login_user_id'];
+            header('location:admin/admin_page.php');
+        } elseif ($row['login_rank'] == 'customer') {
+            $_SESSION['customer_email'] = $row['login_email'];
+            $_SESSION['userid'] = $row['login_user_id'];
+            header('location:customer/customer_page.php');
+        } elseif ($row['login_rank'] == 'farmer') {
+            $_SESSION['farmer_email'] = $row['login_email'];
+            $_SESSION['userid'] = $row['login_user_id'];
+            header('location:farmer/farmer_page.php');
+        }
     };
+} else {
+    $error[] = 'Incorrect email or password!';
 };
 ?>
 <!DOCTYPE html>
