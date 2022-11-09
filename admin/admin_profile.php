@@ -1,17 +1,14 @@
-<?php
+<?php ob_start();
 
-
-ob_start();
-
-@include 'db/conn.php';
+@include '../db/conn.php';
 
 session_start();
+/** $id = $_SESSION['user_id'];
 
-$id = $_SESSION['user_id'];
+ *if (!isset($id)) {
+ *    header('location:../login.php');
+ *}*/
 
-if (!isset($id)) {
-    header('location:../index.php');
-}
 
 ?>
 <!DOCTYPE html>
@@ -26,25 +23,26 @@ if (!isset($id)) {
 
 <body>
     <div class="container">
-
         <div class="profile">
             <?php
-            $select = "SELECT * FROM user WHERE user_email = '$email'";
-            $result = mysqli_query($conn, $select);
-            if (mysqli_num_rows($result) > 0) {
-                $fetch = mysqli_fetch_assoc($result);
-            }
-            if ($fetch['image'] == '') {
-                echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">';
-            } else {
-                echo '<img src="uploaded_img/' . $fetch['image'] . '"';
-            }
+            /** $select = "SELECT * FROM user WHERE user_id = '$id'";
+             *$result = mysqli_query($conn, $select);
+
+             *if (mysqli_num_rows($result) > 0) {
+             *    $fetch = mysqli_fetch_assoc($result);
+             *}
+
+             *if ($fetch['image'] == '') {
+             *    echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">';
+             *} else {
+             *    echo '<img src="uploaded_img/' . $fetch['image'] . '"';
+             *}*/
+            echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">';
 
             ?>
-            <h3><?php echo $fetch['user_name']; ?></h3>
+            <h3><?php /**echo $fetch['user_name']; */ ?>
+            </h3>
             <a href="update_profile.php">update profile</a>
-
-
         </div>
     </div>
 </body>

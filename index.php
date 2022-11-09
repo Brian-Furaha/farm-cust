@@ -34,54 +34,9 @@ if (isset($_POST['signup'])) {
             mysqli_query($conn, $new);
 
 
-            header('location:index.php');
+            header('location:login.php');
         }
     }
-};
-
-if (isset($_POST['login'])) {
-
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pass = md5($_POST['password']);
-
-    $select = " SELECT * FROM login WHERE login_email = '$email' && login_password = '$pass'";
-
-    $result = mysqli_query($conn, $select);
-
-    if (mysqli_num_rows($result) > 0) {
-
-        $row = mysqli_fetch_array($result);
-
-        /** $type = $row['login_rank'];
-         * switch ($type) {
-         * case "admin":
-         * echo "Your favorite color is red!";
-         * break;
-         * case "blue":
-         * echo "Your favorite color is blue!";
-         * break;
-         * case "green":
-         * echo "Your favorite color is green!";
-         * break;
-         * default:
-         * echo "Your favorite color is neither red, blue, nor green!";
-         * } */
-        if ($row['login_rank'] == 'admin') {
-            $_SESSION['admin_email'] = $row['login_email'];
-            $_SESSION['user_id'] = $row['login_user_id'];
-            header('location:admin/admin_page.php');
-        } elseif ($row['login_rank'] == 'customer') {
-            $_SESSION['customer_email'] = $row['login_email'];
-            $_SESSION['userid'] = $row['login_user_id'];
-            header('location:customer/customer_page.php');
-        } elseif ($row['login_rank'] == 'farmer') {
-            $_SESSION['farmer_email'] = $row['login_email'];
-            $_SESSION['userid'] = $row['login_user_id'];
-            header('location:farmer/farmer_page.php');
-        }
-    };
-} else {
-    $error[] = 'Incorrect email or password!';
 };
 ?>
 <!DOCTYPE html>
@@ -105,21 +60,6 @@ if (isset($_POST['login'])) {
         <div class="container">
             <div class="card">
                 <div class="inner-box" id="card">
-                    <div class="card-front">
-                        <form action="" method="post">
-                            <h1 class="title">Login</h1>
-                            <input type="email" name="email" class="input" placeholder="a" required>
-                            <label for="" class="label">Email</label>
-
-                            <input type="password" name="password" class="input" placeholder="a" required>
-                            <label for="" class="label">Password</label>
-
-                            <input type="submit" name="login" class="submitBtn" value="Login">
-                            <button type="button" class="btn" placeholde="a" onclick="openSignup()">I'm new
-                                here</button>
-                            <a href="">Forgot password</a>
-                        </form>
-                    </div>
                     <div class="card-back">
                         <form action="" method="post">
                             <h1 class="title">Signup</h1>
@@ -139,8 +79,8 @@ if (isset($_POST['login'])) {
                             <input type="password" name="cpassword" class="input" placeholder="a">
                             <label for="cpassword" class="label">Confirm Password</label>
                             <input type="submit" name="signup" class="submitBtn" value="Signup">
-                            <button type="button" class="btn" placeholde="a" onclick="openLogin()">I have an
-                                account</button>
+                            <a href="login.php"><button type="button" class="btn" placeholde="a">I have an
+                                    account</button></a>
                         </form>
                     </div>
                 </div>
@@ -155,17 +95,6 @@ if (isset($_POST['login'])) {
         </div>
     </main>
     <footer></footer>
-    <script>
-    var card = document.getElementById("card");
-
-    function openSignup() {
-        card.style.transform = "rotateY(-180deg)";
-    }
-
-    function openLogin() {
-        card.style.transform = "rotateY(0deg)";
-    }
-    </script>
 </body>
 
 </html>

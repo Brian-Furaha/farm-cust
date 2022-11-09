@@ -14,7 +14,7 @@ print_r($_SESSION['email']);
 /**if (isset($_SESSION['user_id']) && is_numeric($_SESSION['user_id'])) {
 } */
 if (!isset($id)) {
-    header('location:../index.php');
+    header('location:index.php');
 } else {
 
     if (isset($_POST['create_profile'])) {
@@ -44,39 +44,34 @@ if (!isset($id)) {
                 $result = mysqli_query($conn, $select);
                 $row = mysqli_fetch_array($result);
                 if ($row['login_rank'] == 'admin') {
-                    /** $_SESSION['admin_email'] = $row['email'];*/
-
+                    $_SESSION['email'] = $row['email'];
                     $_SESSION['user_id'] =  $row['login_user_id'];
                     header('location:admin/admin_page.php');
                 } elseif ($row['login_rank'] == 'customer') {
-                    /** $_SESSION['customer_email'] = $row['email'];*/
-
+                    $_SESSION['email'] = $row['email'];
                     $_SESSION['user_id'] =  $row['login_user_id'];
                     header('location:customer/customer_page.php');
                 } elseif ($row['login_rank'] == 'farmer') {
-                    /** $_SESSION['farmer_email'] = $row['email'];*/
-
+                    $_SESSION['email'] = $row['email'];
                     $_SESSION['user_id'] =  $row['login_user_id'];
                     header('location:farmer/farmer_page.php');
                 }
             } else {
                 mysqli_query($conn, "INSERT INTO user (user_email, user_name, user_location, user_mobile) VALUES('$email', '$name', '$loca', $mobile)");
+
                 $select = " SELECT * FROM login WHERE login_email = '$mail' && login_user_id = '$id'";
                 $result = mysqli_query($conn, $select);
                 $row = mysqli_fetch_array($result);
                 if ($row['login_rank'] == 'admin') {
-                    /** $_SESSION['admin_email'] = $row['email'];*/
-
+                    $_SESSION['admin_email'] = $row['email'];
                     $_SESSION['user_id'] =  $row['login_user_id'];
                     header('location:admin/admin_page.php');
                 } elseif ($row['login_rank'] == 'customer') {
-                    /** $_SESSION['customer_email'] = $row['email'];*/
-
+                    $_SESSION['customer_email'] = $row['email'];
                     $_SESSION['user_id'] =  $row['login_user_id'];
                     header('location:customer/customer_page.php');
                 } elseif ($row['login_rank'] == 'farmer') {
-                    /** $_SESSION['farmer_email'] = $row['email'];*/
-
+                    $_SESSION['farmer_email'] = $row['email'];
                     $_SESSION['user_id'] =  $row['login_user_id'];
                     header('location:farmer/farmer_page.php');
                 }
