@@ -5,15 +5,16 @@
 @include 'db/conn.php';
 
 session_start();
-
-$id = $_SESSION['user_id'];
+/**$id = $_SESSION['user_id'];
 $mail = $_SESSION['email'];
 echo $mail;
-print_r($_SESSION['email']);
+print_r($_SESSION['email']); */
+
 
 /**if (isset($_SESSION['user_id']) && is_numeric($_SESSION['user_id'])) {
 } */
-if (!isset($id)) {
+
+/**if (!isset($id)) {
     header('location:index.php');
 } else {
 
@@ -89,6 +90,7 @@ if (!isset($id)) {
         print_r($row['login_email']);
     };
 }
+ */
 
 
 
@@ -102,36 +104,40 @@ if (!isset($id)) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create profile</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 
 <body>
-    <div class="profile">
-        <?php
-        /**$select = " SELECT * FROM login WHERE login_email = '$email' && *login_user_id = '$id'";
+    <div class="container">
+        <div class="profile">
+            <?php
+            /**$select = " SELECT * FROM login WHERE login_email = '$email' && *login_user_id = '$id'";
 
-         *$result = mysqli_query($conn, $select); */
+             *$result = mysqli_query($conn, $select); */
 
-        ?>
-        <form action="" method="post" enctype="multipart/form-data">
-            <div class="flex">
-                <div class="inputbox">
-                    <span>Enter your full name :</span>
-                    <input type="text" name="name" class="box">
-                    <span>Enter your location :</span>
-                    <input type="text" name="location" class="box">
-                    <span>Enter Email :</span>
-                    <input type="email" name="email" value="<?php echo $row['login_email']; ?>" class="box">
-                    <span>Enter Your contact number :</span>
-                    <input type="text" name="mobile" class="box">
-                    <span>Upload your profile picture :</span>
-                    <input type="file" name="image" accept="image/jpg, image/jpeg, image/png," class="box">
+            ?>
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="flex">
+                    <div class="inputBox">
+                        <span>Enter your full name :</span>
+                        <input type="text" name="name" class="box">
+                        <span>Enter your location :</span>
+                        <input type="text" name="location" class="box">
+                        <span>Enter Email :</span>
+                        <input type="email" name="email" value="<?php //echo $row['login_email']; 
+                                                                ?>" class="box">
+                        <span>Enter Your contact number :</span>
+                        <input type="text" name="mobile" class="box">
+                        <span>Upload your profile picture :</span>
+                        <input type="file" name="image" accept="image/jpg, image/jpeg, image/png," class="box">
+                    </div>
                 </div>
-            </div>
-            <input type="submit" value="create profile" name="create_profile">
-        </form>
+                <input type="submit" value="create profile" name="create_profile">
+            </form>
 
+        </div>
     </div>
+
 </body>
 
 </html>

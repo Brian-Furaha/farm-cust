@@ -1,12 +1,9 @@
-<?php
-
-ob_start();
+<?php ob_start();
 
 @include 'db/conn.php';
 
 session_start();
-
-$id = $_SESSION['user_id'];
+/**$id = $_SESSION['user_id'];
 
 if (isset($_POST['update_profile'])) {
 
@@ -30,12 +27,14 @@ if (isset($_POST['update_profile'])) {
     $result2 = mysqli_query($conn, $select2);
 
     if (mysqli_num_rows($result['login_email']) > 0) {
-        /**$row = mysqli_fetch_array($result); */
-        $error[] = 'email already exists!';
+        /**$row = mysqli_fetch_array($result);*/
+/** 
+ *$error[] = 'email already exists!';
 
-    } elseif (mysqli_num_rows($result2['user_name']) > 0) {
-        /**$row = mysqli_fetch_array($result); */
-        $error[] = 'name already exists!';
+ *} elseif (mysqli_num_rows($result2['user_name']) > 0) {
+ *   /**$row = mysqli_fetch_array($result); */
+/*   
+    $error[] = 'name already exists!';
 
     } else {
 
@@ -67,36 +66,39 @@ if (isset($_POST['update_profile'])) {
             $error[] = 'image update successful!';
         }
     }
-};
+}; */
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>update profile</title>
+    <link rel="stylesheet" href="../css/profile.css">
+    <link rel="stylesheet" href="../css/nav.css">
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
-    
-    <div class="update-profile">
-        <?php
-                $select = "SELECT * FROM user WHERE user_id = '$id'";
+    <div class="container">
+        <div class="profile">
+            <?php
+            /**$select = "SELECT * FROM user WHERE user_id = '$id'";
                 $select2 = "SELECT * FROM 'login' WHERE login_user_id = '$id'";
                 $result = mysqli_query($conn, $select);
                 $result2 = mysqli_query($conn, $select2);
-                if (mysqli_num_row($result) > 0) {
+                if (mysqli_num_rows($result) > 0) {
                     $fetch = mysqli_fetch_assoc($result);
                     $fetch2 = mysqli_fetch_assoc($result2);
                 }
-                
-            
+             */
             ?>
-
             <form action="" method="post" enctype="multipart/form-data">
                 <?php
-                    if ($fetch['image'] == '') {
+                /**if ($fetch['image'] == '') {
                     echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">' 
                 } else {
                     echo '<img src="uploaded_img/'.$fetch['image'].'"'
@@ -105,34 +107,43 @@ if (isset($_POST['update_profile'])) {
                     foreach ($error as $error) {
                         echo '<span class="error-msg">' . $error . '</span>';
                     };
-                };
-                
+                }; */
+                echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">';
                 ?>
                 <div class="flex">
                     <div class="inputBox">
                         <span>name :</span>
-                        <input type="text" name="update_name" value="<?php echo $fetch['user_name']?>" class="box">
+                        <input type="text" name="update_name" value="
+                        <?php //echo $fetch['user_name'];
+                        ?>" class="box">
                         <span>your email :</span>
-                        <input type="email" name="update_email" value="<?php echo $fetch['user_email']?>" class="box">
+                        <input type="email" name="update_email" value="
+                        <?php //echo $fetch['user_email'];
+                        ?>" class="box">
                         <span>your contact :</span>
-                        <input type="text" name="update_mobile" value="<?php echo $fetch['user_mobile']?>" class="box">
+                        <input type="text" name="update_mobile" value="
+                            <?php //echo $fetch['user_mobile'];
+                            ?>" class="box">
                         <span>location :</span>
-                        <input type="text" name="update_location" value="<?php echo $fetch['user_location']?>" class="box">
+                        <input type="text" name="update_location" value="
+                        <?php //echo $fetch['user_location'];
+                        ?>" class="box">
                         <span>update your pic :</span>
                         <input type="file" name="image" accept="image/jpg, image/jpeg, image/png," class="box">
                     </div>
                     <div class="inputBox">
-                        <input type="hidden" name="old_pass" value="<?php $fetch2['login_password'] ?>" >
-                        <span>old password</span>
-                        <input type="password" name="update_pass" placeholder="enter current password">
-                        <span>new password</span>
-                        <input type="password" name="new_pass" placeholder="enter new password">
-                        <span>confirm new password</span>
-                        <input type="password" name="confirm_pass" placeholder="confirm password" >
+                        <span>old password :</span>
+                        <input type="password" name="update_pass" placeholder="enter current password" class="box">
+                        <span>new password :</span>
+                        <input type="password" name="new_pass" placeholder="enter new password" class="box">
+                        <span>confirm new password :</span>
+                        <input type="password" name="confirm_pass" placeholder="confirm password" class="box">
                     </div>
                 </div>
                 <input type="submit" value="update profile" name="update_profile">
             </form>
+        </div>
     </div>
 </body>
+
 </html>

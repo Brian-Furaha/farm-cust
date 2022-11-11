@@ -34,6 +34,7 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/nav.css">
     <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
@@ -114,39 +115,38 @@ session_start();
                     <span>admin</span>
                 </h3>
                 <h1>welcome <span></span></h1>
-                <p>this is an admin page</p><a href="../index.php" class="btn">login or register</a><a
-                    href="../index.php" class="btn">Logout</a>
+                <p>this is an admin page</p><a href="../index.php" class="btn">login or register</a><a href="../index.php" class="btn">Logout</a>
             </div>
         </div>
     </section>
     <script>
-    let sidebar = document.querySelector(".sidebar");
-    let closeBtn = document.querySelector("#btn");
-    let searchBtn = document.querySelector(".bx-search");
+        let sidebar = document.querySelector(".sidebar");
+        let closeBtn = document.querySelector("#btn");
+        let searchBtn = document.querySelector(".bx-search");
 
-    closeBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
+        closeBtn.addEventListener("click", () => {
+                sidebar.classList.toggle("open");
+                menuBtnChange(); //calling the function(optional)
+            }
+
+        );
+
+        searchBtn.addEventListener("click", () => {
+                // Sidebar open when you click on the search iocn
+                sidebar.classList.toggle("open");
+                menuBtnChange(); //calling the function(optional)
+            }
+
+        );
+
+        // following are the code to change sidebar button(optional)
+        function menuBtnChange() {
+            if (sidebar.classList.contains("open")) {
+                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
+            } else {
+                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
+            }
         }
-
-    );
-
-    searchBtn.addEventListener("click", () => {
-            // Sidebar open when you click on the search iocn
-            sidebar.classList.toggle("open");
-            menuBtnChange(); //calling the function(optional)
-        }
-
-    );
-
-    // following are the code to change sidebar button(optional)
-    function menuBtnChange() {
-        if (sidebar.classList.contains("open")) {
-            closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
-        } else {
-            closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
-        }
-    }
     </script>
 </body>
 
