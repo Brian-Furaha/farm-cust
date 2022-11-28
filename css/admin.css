@@ -1,7 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
 
 .container {
-    min-height: 100vh;
+    /*min-height: 100vh; */
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,4 +52,40 @@
 
 .container .content .btn:hover {
     background: crimson;
+}
+
+.post {
+    /*min-height: 400px;*/
+    height: auto;
+    padding: 5px;
+    /*padding-right: 0;*/
+    background-color: white;
+}
+
+.postbox {
+    /*border: solid thin #aaa;padding: 10px;*/
+    
+    width: 100%;
+
+}
+
+textarea {
+    width: 100%;
+    border: none;
+    /*font-family: 'Times New Roman', Times, serif;*/
+    font-size: 14px;
+}
+
+#post_btn {
+    float: right;
+    background-color: #b0ff66;
+    border: none;
+    padding: 4px;
+    font-size: 14px;
+    border-radius: 2px;
+    width: 5px;
+}
+
+#post_btn:hover {
+    background-color: #7bff00
 }

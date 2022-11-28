@@ -29,125 +29,42 @@ session_start();
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="../css/admin.css">
-    <link rel="stylesheet" href="../css/nav.css">
-    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<!-- bootstrap -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+	<link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+	<!-- main style -->
+	<link rel="stylesheet" href="./main.css" />
+	<link rel="stylesheet" href="../css/admin.css">
+	<link rel="stylesheet" href="../css/nav.css">
+
+	<title>Admin Dashboard</title>
+
 </head>
 
-<body>
-    <div class="navbar">
-        <!-- Navbar logo -->
+<body class="bg-gray postion-relative">
+	<!-- ================= Appbar ================= -->
 
-        <div class="nav-header">
-            <div class="nav-logo"><a href="#"><img src="../images/farmcust.png" width="100px" alt="logo"></a>
-            </div>
-        </div>
+	<!-- =============== New Chat Mobile =============== -->
 
-        <!-- Navbar items -->
+	<!-- ================= Chat Modal Mobile ================= -->
 
-        <div class="nav-links">
-            <a href="#">About</a>
-            <a href="#">Contact</a>
-            <a href="../logout.php"><button class="loginBtn">Logout</button></a>
 
-        </div>
-    </div>
-    <div class="sidebar">
-        <div class="logo-details">
-            <div class="logo_name">Farm&Cust</div>
-            <i class='bx bx-menu' id="btn"></i>
-        </div>
-        <ul class="nav-list">
-            <li>
-                <i class='bx bx-search'></i>
-                <input type="text" placeholder="Search..."><span class="tooltip">Search</span>
-            </li>
-            <li>
-                <a href="admin_page.php">
-                    <i class='bx bx-grid-alt'></i>
-                    <span class="links_name">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
-            </li>
-            <li>
-                <a href="admin_profile.php">
-                    <i class='bx bx-user'></i>
-                    <span class="links_name">User</span>
-                </a>
-                <span class="tooltip">User</span>
-            </li>
-            <li>
-                <a href="messages.php">
-                    <i class='bx bx-chat'></i>
-                    <span class="links_name">Messages</span>
-                </a>
-                <span class="tooltip">Messages</span>
-            </li>
-            <li>
-                <a href="analytic.php">
-                    <i class='bx bx-pie-chart-alt-2'></i>
-                    <span class="links_name">Analytics</span>
-                </a>
-                <span class="tooltip">Analytics</span>
-            </li>
-            <li class="profile">
-                <a href="logout.php">
-                    <div class="profile-details">
-                        <!--<img src="profile.jpg" alt="profileImg">-->
-                        <div class="name_job">
-                            <div class="name">user name</div>
-                            <div class="job">admin</div>
-                        </div>
-                    </div>
-                    <i class='bx bx-log-out' id="log_out"></i>
-            </li>
-        </ul>
-    </div>
-    <section class="home-section">
-        <div class="text">Dashboard</div>
-        <div class="container">
-            <div class="content">
-                <h3>hi,
-                    <span>admin</span>
-                </h3>
-                <h1>welcome <span></span></h1>
-                <p>this is an admin page</p><a href="../index.php" class="btn">login or register</a><a href="../index.php" class="btn">Logout</a>
-            </div>
-        </div>
-    </section>
-    <script>
-        let sidebar = document.querySelector(".sidebar");
-        let closeBtn = document.querySelector("#btn");
-        let searchBtn = document.querySelector(".bx-search");
+	<!-- ================= Main ================= -->
+	<div class="container-fluid">
+		<div class="row justify-content-evenly">
+			<!-- ================= Timeline ================= -->
 
-        closeBtn.addEventListener("click", () => {
-                sidebar.classList.toggle("open");
-                menuBtnChange(); //calling the function(optional)
-            }
-
-        );
-
-        searchBtn.addEventListener("click", () => {
-                // Sidebar open when you click on the search iocn
-                sidebar.classList.toggle("open");
-                menuBtnChange(); //calling the function(optional)
-            }
-
-        );
-
-        // following are the code to change sidebar button(optional)
-        function menuBtnChange() {
-            if (sidebar.classList.contains("open")) {
-                closeBtn.classList.replace("bx-menu", "bx-menu-alt-right"); //replacing the iocns class
-            } else {
-                closeBtn.classList.replace("bx-menu-alt-right", "bx-menu"); //replacing the iocns class
-            }
-        }
-    </script>
+		</div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous">
+	</script>
+	<script src="./main.js"></script>
 </body>
 
 </html>
