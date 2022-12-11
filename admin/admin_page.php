@@ -3,23 +3,14 @@
 @include '../db/conn.php';
 
 session_start();
-/** $id = $_SESSION['user_id'];
- *$email = $_SESSION['admin_email'];
- *if (!isset($id)) {
- *    header('location:../login.php');
- *} else {
+$id = $_SESSION['userid'];
+if (!isset($id)) {
+	header('location:../index.php');
+} else {
 
- *    $select = " SELECT * FROM user WHERE user_id = '$id'";
-
- *    $result = mysqli_query($conn, $select);
- *    if (mysqli_num_rows($result) < 2) {
-
- *        $row2 = mysqli_fetch_array($result);
- *        $_SESSION['email'] = $row['login_email'];
- *        $_SESSION['user_id'] = $row['login_user_id'];
- *        header('location:../create_profile.php');
- *    }
- *}*/
+	$select = " SELECT * FROM user WHERE user_id = '$id'";
+	$result = mysqli_query($conn, $select);
+}
 
 ?>
 

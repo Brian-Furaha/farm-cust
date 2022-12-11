@@ -53,24 +53,31 @@ session_start();
 <body class="bg-gray postion-relative">
   <!-- ================= Appbar ================= -->
   <?php
-	include '../includes/appbar.php';
-	?>
+  include '../includes/appbar.php';
+  ?>
   <!-- =============== New Chat Mobile =============== -->
   <?php
-	include '../includes/newchatmobile.php';
-	?>
+  include '../includes/newchatmobile.php';
+  ?>
   <!-- ================= Chat Modal Mobile ================= -->
   <?php
-	include '../includes/mobilechat.php'
-	?>
+  include '../includes/mobilechat.php'
+  ?>
 
   <!-- ================= Main ================= -->
   <div class="container-fluid">
     <div class="row justify-content-evenly">
       <!-- ================= Timeline ================= -->
       <?php
-			include '../includes/feeds.php';
-			?>
+      // if ($post) {
+      //   foreach ($post as $row) {
+      //     $user = new User();
+      //     $row_user = $user->get_user($row['userid']);
+      //     include("../includes/feeds.php");
+      //   }
+      // }
+      // include '../includes/feeds.php';
+      ?>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"

@@ -7,6 +7,7 @@ ob_start();
 
 session_start();
 
+
 if (isset($_POST['login'])) {
 
   $email = mysqli_real_escape_string($conn, $_POST['email']);
@@ -21,16 +22,16 @@ if (isset($_POST['login'])) {
 
     if ($row['login_rank'] == 'admin') {
       /*$_SESSION['admin_email'] = $row['login_email']; */
-      $_SESSION['user_id'] = $row['login_user_id'];
-      header('location:admin/admin_page.php');
+      $_SESSION['userid'] = $row['login_user_id'];
+      header("Location:admin/admin_page.php");
     } elseif ($row['login_rank'] == 'customer') {
       /*$_SESSION['customer_email'] = $row['login_email'];*/
       $_SESSION['userid'] = $row['login_user_id'];
-      header('location:market/market_page.php');
+      header('Location:market/market_page.php');
     } elseif ($row['login_rank'] == 'farmer') {
       /*$_SESSION['farmer_email'] = $row['login_email'];*/
       $_SESSION['userid'] = $row['login_user_id'];
-      header('location:farmer/farmer_page.php');
+      header('Location:farmer/farmer_page.php');
     }
   } else {
     $error[] = 'Login: Incorrect email or password!';
@@ -40,12 +41,20 @@ if (isset($_POST['login'])) {
 if (isset($_POST['signup'])) {
 
   $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $fname = mysqli_real_escape_string($conn, $_POST['firstname']);
+  $sname = mysqli_real_escape_string($conn, $_POST['surname']);
   $pass = md5($_POST['password']);
   $cpass = md5($_POST['cpassword']);
   $role = $_POST['flexRadioDefault'];
-  $id = random_num(20);
-
+  $id = random_num(19);
   $result = mysqli_query($conn, " SELECT login_email, login_rank FROM login WHERE login_email = '$email' && login_rank = '$role'");
+
+  if (!$conn) {
+
+    die('Could not connect: ' . mysqli_connect_error());
+  }
+
+  echo 'Connected successfully';
 
   if (mysqli_num_rows($result) > 0) {
 
@@ -56,8 +65,7 @@ if (isset($_POST['signup'])) {
       $error[] = 'Signup: password does not match!';
     } else {
       $insert = "INSERT INTO login(login_email, login_password, login_rank, login_user_id) VALUES('$email', '$pass', '$role', $id)";
-      $new = "INSERT INTO user(user_id) VALUES('$id')";
-
+      $new = "INSERT INTO user(user_id, user_fname, user_sname, user_email) VALUES('$id', '$fname', '$sname', '$email')";
       mysqli_query($conn, $insert);
       mysqli_query($conn, $new);
 
@@ -164,19 +172,22 @@ if (isset($_POST['signup'])) {
                     <div class="col">
                       <div class="border rounded p-2">
                         <label class="form-check-label" for="flexRadioDefault1">Admin </label>
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" />
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="admin"
+                          id="flexRadioDefault1" />
                       </div>
                     </div>
                     <div class="col">
                       <div class="border rounded p-2">
                         <label class="form-check-label" for="flexRadioDefault2">Farmer </label>
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="farmer"
+                          id="flexRadioDefault2" />
                       </div>
                     </div>
                     <div class="col">
                       <div class="border rounded p-2">
                         <label class="form-check-label" for="flexRadioDefault3">Customer </label>
-                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" />
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" value="customer"
+                          id="flexRadioDefault3" />
                       </div>
                     </div>
                   </div>
@@ -186,17 +197,17 @@ if (isset($_POST['signup'])) {
                   </div>
                   <!-- btn -->
                   <div class="text-center mt-3">
-                    <button type="button" name="signup" class="btn btn-success btn-lg" data-bs-dismiss="modal">Sign
+                    <button type="submit" name="signup" id='signup' class="btn btn-success btn-lg">Sign
                       Up</button>
+                    <!-- data-bs-dismiss="modal" -->
                   </div>
-                </form>
-                <?php
-                if (isset($error)) {
-                  foreach ($error as $error) {
+                  <?php
+                  if (isset($error) && !empty($error)) {
                     echo '<span class="error-msg">' . $error . '</span>';
                   };
-                };
-                ?>
+                  ?>
+                </form>
+
               </div>
             </div>
           </div>
