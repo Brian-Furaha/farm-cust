@@ -6,73 +6,6 @@ ob_start();
 @include 'functions.php';
 
 session_start();
-
-
-if (isset($_POST['login'])) {
-
-  $email = mysqli_real_escape_string($conn, $_POST['email']);
-  $pass = md5($_POST['password']);
-
-  $result = mysqli_query($conn, " SELECT * FROM login WHERE login_email = '$email' && login_password = '$pass'");
-
-  if (mysqli_num_rows($result) > 0) {
-
-    $row = mysqli_fetch_array($result);
-
-
-    if ($row['login_rank'] == 'admin') {
-      /*$_SESSION['admin_email'] = $row['login_email']; */
-      $_SESSION['userid'] = $row['login_user_id'];
-      header("Location:admin/admin_page.php");
-    } elseif ($row['login_rank'] == 'customer') {
-      /*$_SESSION['customer_email'] = $row['login_email'];*/
-      $_SESSION['userid'] = $row['login_user_id'];
-      header('Location:market/market_page.php');
-    } elseif ($row['login_rank'] == 'farmer') {
-      /*$_SESSION['farmer_email'] = $row['login_email'];*/
-      $_SESSION['userid'] = $row['login_user_id'];
-      header('Location:farmer/farmer_page.php');
-    }
-  } else {
-    $error[] = 'Login: Incorrect email or password!';
-  }
-}
-
-if (isset($_POST['signup'])) {
-
-  $email = mysqli_real_escape_string($conn, $_POST['email']);
-  $fname = mysqli_real_escape_string($conn, $_POST['firstname']);
-  $sname = mysqli_real_escape_string($conn, $_POST['surname']);
-  $pass = md5($_POST['password']);
-  $cpass = md5($_POST['cpassword']);
-  $role = $_POST['flexRadioDefault'];
-  $id = random_num(19);
-  $result = mysqli_query($conn, " SELECT login_email, login_rank FROM login WHERE login_email = '$email' && login_rank = '$role'");
-
-  if (!$conn) {
-
-    die('Could not connect: ' . mysqli_connect_error());
-  }
-
-  echo 'Connected successfully';
-
-  if (mysqli_num_rows($result) > 0) {
-
-    $error[] = 'Signup: user already exists!';
-  } else {
-
-    if ($pass != $cpass) {
-      $error[] = 'Signup: password does not match!';
-    } else {
-      $insert = "INSERT INTO login(login_email, login_password, login_rank, login_user_id) VALUES('$email', '$pass', '$role', $id)";
-      $new = "INSERT INTO user(user_id, user_fname, user_sname, user_email) VALUES('$id', '$fname', '$sname', '$email')";
-      mysqli_query($conn, $insert);
-      mysqli_query($conn, $new);
-
-      header('location:index.php');
-    }
-  }
-};
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -99,6 +32,7 @@ if (isset($_POST['signup'])) {
 </head>
 
 <body class="bg-gray">
+  <?php include('error.php'); ?>
   <!-- Login -->
   <div class="container mt-5 pt-5 d-flex flex-column flex-lg-row justify-content-evenly">
     <!-- heading -->
@@ -112,7 +46,7 @@ if (isset($_POST['signup'])) {
       <!-- login form -->
 
       <div class="bg-white shadow rounded p-3 input-group-lg im">
-        <form action="" method="post">
+        <form action="code.php" method="post">
           <input type="email" class="form-control my-3" name="email" placeholder="Email address" />
           <input type="password" name="password" class="form-control my-3" placeholder="Password" required />
           <input type="submit" name="login" class="btn btn-primary w-100 my-3" value="Login">
@@ -120,13 +54,6 @@ if (isset($_POST['signup'])) {
             <p>Forgotten password?</p>
           </a>
         </form>
-        <?php
-        if (isset($error)) {
-          foreach ($error as $error) {
-            echo '<span class="error-msg">' . $error . '</span>';
-          };
-        };
-        ?>
 
         <!-- create form -->
         <hr />
@@ -148,7 +75,7 @@ if (isset($_POST['signup'])) {
               </div>
               <!-- body -->
               <div class="modal-body">
-                <form method="post">
+                <form action="code.php" method="post">
                   <!-- names -->
                   <div class="row">
                     <div class="col">
@@ -197,15 +124,10 @@ if (isset($_POST['signup'])) {
                   </div>
                   <!-- btn -->
                   <div class="text-center mt-3">
-                    <button type="submit" name="signup" id='signup' class="btn btn-success btn-lg">Sign
+                    <button type="submit" name="signup" class="btn btn-success btn-lg">Sign
                       Up</button>
                     <!-- data-bs-dismiss="modal" -->
                   </div>
-                  <?php
-                  if (isset($error) && !empty($error)) {
-                    echo '<span class="error-msg">' . $error . '</span>';
-                  };
-                  ?>
                 </form>
 
               </div>
@@ -234,7 +156,7 @@ if (isset($_POST['signup'])) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
   </script>
-  <script src="./main.js"></script>
+  <script src="main.js"></script>
 </body>
 
 </html>

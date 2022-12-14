@@ -1,3 +1,14 @@
+<?php ob_start();
+
+@include '../db/conn.php';
+
+session_start();
+$id = $_SESSION['userid'];
+if (!isset($id)) {
+  header('location:../admin.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 

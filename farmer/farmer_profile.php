@@ -7,43 +7,323 @@ ob_start();
 
 session_start();
 
-$id = $_SESSION['user_id'];
+$id = $_SESSION['userid'];
 
 if (!isset($id)) {
-    header('location:../index.php');
+	header('location:../index.php');
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>customer | Profile</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>customer | Profile</title>
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous" />
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- main style -->
+  <link rel="stylesheet" href="./main.css" />
+  <link rel="stylesheet" href="farmer.css">
+  <link rel="stylesheet" href="../css/nav.css">
 </head>
+
 <body>
-    <div class="container">
+  <div class="container">
 
-        <div class="profile">
-            <?php
-                $select = "SELECT * FROM user WHERE user_email = '$email'";
-                $result = mysqli_query($conn, $select);
-                if (mysqli_num_row($result) > 0) {
-                    $fetch = mysqli_fetch_assoc($result);
-                }
-                if ($fetch['image'] == '') {
-                    echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">' 
-                } else {
-                    echo '<img src="uploaded_img/'.$fetch['image'].'"'
-                }
-            
-            ?>
-            <h3><?php echo $fetch['user_name']; ?></h3>
-            <a href="update_profile.php">update profile</a>
-            
+    <div class="profile">
+      <?php
+			// $select = "SELECT * FROM user WHERE user_id = '$email'";
+			// $result = mysqli_query($conn, $select);
+			// if (mysqli_num_rows($result) > 0) {
+			// 	$fetch = mysqli_fetch_assoc($result);
+			// }
+			// if ($fetch['user_image'] == '') {
+			// 	echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">';
+			// } else {
+			// 	echo '<img src="uploaded_img/' . $fetch['user_image'] . '"';
+			// }
+			echo '<img src="../images/default.png" class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt="">';
+			?>
+      <h3>
+        <?php
+				// echo $fetch['user_name'];
+				?>
+      </h3>
+      <a href="update_profile.php">update profile</a>
 
-        </div>
+
     </div>
+  </div>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div id="content" class="content content-full-width">
+          <!-- begin profile -->
+          <div class="profile">
+            <div class="profile-header">
+              <!-- BEGIN profile-header-cover -->
+              <div class="profile-header-cover"></div>
+              <!-- END profile-header-cover -->
+              <!-- BEGIN profile-header-content -->
+              <div class="profile-header-content">
+                <!-- BEGIN profile-header-img -->
+                <div class="profile-header-img">
+                  <img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt="">
+                </div>
+                <!-- END profile-header-img -->
+                <!-- BEGIN profile-header-info -->
+                <div class="profile-header-info">
+                  <h4 class="m-t-10 m-b-5">Sean Ngu</h4>
+                  <p class="m-b-10">UXUI + Frontend Developer</p>
+                  <a href="#" class="btn btn-sm btn-info mb-2">Edit Profile</a>
+                </div>
+                <!-- END profile-header-info -->
+              </div>
+              <!-- END profile-header-content -->
+              <!-- BEGIN profile-header-tab -->
+              <ul class="profile-header-tab nav nav-tabs">
+                <li class="nav-item"><a href="https://www.bootdey.com/snippets/view/bs4-profile-with-timeline-posts"
+                    target="__blank" class="nav-link_">POSTS</a></li>
+                <li class="nav-item"><a href="https://www.bootdey.com/snippets/view/bs4-profile-about" target="__blank"
+                    class="nav-link_">ABOUT</a></li>
+                <li class="nav-item"><a href="https://www.bootdey.com/snippets/view/profile-photos" target="__blank"
+                    class="nav-link_">PHOTOS</a></li>
+                <li class="nav-item"><a href="https://www.bootdey.com/snippets/view/profile-videos" target="__blank"
+                    class="nav-link_">VIDEOS</a></li>
+                <li class="nav-item"><a href="https://www.bootdey.com/snippets/view/bs4-profile-friend-list"
+                    target="__blank" class="nav-link_ active show">FRIENDS</a></li>
+              </ul>
+              <!-- END profile-header-tab -->
+            </div>
+          </div>
+          <!-- end profile -->
+          <!-- begin profile-content -->
+          <div class="profile-content">
+            <!-- begin tab-content -->
+            <div class="tab-content p-0">
+              <!-- begin #profile-post tab -->
+              <div class="tab-pane fade active show" id="profile-post">
+                <!-- begin timeline -->
+                <ul class="timeline">
+                  <li>
+                    <!-- begin timeline-time -->
+                    <div class="timeline-time">
+                      <span class="date">today</span>
+                      <span class="time">04:20</span>
+                    </div>
+                    <!-- end timeline-time -->
+                    <!-- begin timeline-icon -->
+                    <div class="timeline-icon">
+                      <a href="javascript:;">&nbsp;</a>
+                    </div>
+                    <!-- end timeline-icon -->
+                    <!-- begin timeline-body -->
+                    <div class="timeline-body">
+                      <div class="timeline-header">
+                        <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                            alt=""></span>
+                        <span class="username"><a href="javascript:;">Sean Ngu</a> <small></small></span>
+                        <span class="pull-right text-muted">18 Views</span>
+                      </div>
+                      <div class="timeline-content">
+                        <p>
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc faucibus turpis quis tincidunt
+                          luctus.
+                          Nam sagittis dui in nunc consequat, in imperdiet nunc sagittis.
+                        </p>
+                      </div>
+                      <div class="timeline-likes">
+                        <div class="stats-right">
+                          <span class="stats-text">259 Shares</span>
+                          <span class="stats-text">21 Comments</span>
+                        </div>
+                        <div class="stats">
+                          <span class="fa-stack fa-fw stats-icon">
+                            <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                            <i class="fa fa-heart fa-stack-1x fa-inverse t-plus-1"></i>
+                          </span>
+                          <span class="fa-stack fa-fw stats-icon">
+                            <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                          </span>
+                          <span class="stats-total">4.3k</span>
+                        </div>
+                      </div>
+                      <div class="timeline-footer">
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                      </div>
+                      <div class="timeline-comment-box">
+                        <div class="user"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"></div>
+                        <div class="input">
+                          <form action="">
+                            <div class="input-group">
+                              <input type="text" class="form-control rounded-corner" placeholder="Write a comment...">
+                              <span class="input-group-btn p-l-10">
+                                <button class="btn btn-primary f-s-12 rounded-corner" type="button">Comment</button>
+                              </span>
+                            </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end timeline-body -->
+                  </li>
+                  <li>
+                    <!-- begin timeline-time -->
+                    <div class="timeline-time">
+                      <span class="date">yesterday</span>
+                      <span class="time">20:17</span>
+                    </div>
+                    <!-- end timeline-time -->
+                    <!-- begin timeline-icon -->
+                    <div class="timeline-icon">
+                      <a href="javascript:;">&nbsp;</a>
+                    </div>
+                    <!-- end timeline-icon -->
+                    <!-- begin timeline-body -->
+                    <div class="timeline-body">
+                      <div class="timeline-header">
+                        <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                            alt=""></span>
+                        <span class="username">Sean Ngu</span>
+                        <span class="pull-right text-muted">82 Views</span>
+                      </div>
+                      <div class="timeline-content">
+                        <p>Location: United States</p>
+                      </div>
+                      <div class="timeline-footer">
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                      </div>
+                    </div>
+                    <!-- end timeline-body -->
+                  </li>
+                  <li>
+                    <!-- begin timeline-time -->
+                    <div class="timeline-time">
+                      <span class="date">24 February 2014</span>
+                      <span class="time">08:17</span>
+                    </div>
+                    <!-- end timeline-time -->
+                    <!-- begin timeline-icon -->
+                    <div class="timeline-icon">
+                      <a href="javascript:;">&nbsp;</a>
+                    </div>
+                    <!-- end timeline-icon -->
+                    <!-- begin timeline-body -->
+                    <div class="timeline-body">
+                      <div class="timeline-header">
+                        <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                            alt=""></span>
+                        <span class="username">Sean Ngu</span>
+                        <span class="pull-right text-muted">1,282 Views</span>
+                      </div>
+                      <div class="timeline-content">
+                        <p class="lead">
+                          <i class="fa fa-quote-left fa-fw pull-left"></i>
+                          Quisque sed varius nisl. Nulla facilisi. Phasellus consequat sapien sit amet nibh molestie
+                          placerat. Donec nulla quam, ullamcorper ut velit vitae, lobortis condimentum magna.
+                          Suspendisse mollis in sem vel mollis.
+                          <i class="fa fa-quote-right fa-fw pull-right"></i>
+                        </p>
+                      </div>
+                      <div class="timeline-footer">
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                      </div>
+                    </div>
+                    <!-- end timeline-body -->
+                  </li>
+                  <li>
+                    <!-- begin timeline-time -->
+                    <div class="timeline-time">
+                      <span class="date">10 January 2014</span>
+                      <span class="time">20:43</span>
+                    </div>
+                    <!-- end timeline-time -->
+                    <!-- begin timeline-icon -->
+                    <div class="timeline-icon">
+                      <a href="javascript:;">&nbsp;</a>
+                    </div>
+                    <!-- end timeline-icon -->
+                    <!-- begin timeline-body -->
+                    <div class="timeline-body">
+                      <div class="timeline-header">
+                        <span class="userimage"><img src="https://bootdey.com/img/Content/avatar/avatar3.png"
+                            alt=""></span>
+                        <span class="username">Sean Ngu</span>
+                        <span class="pull-right text-muted">1,021,282 Views</span>
+                      </div>
+                      <div class="timeline-content">
+                        <h4 class="template-title">
+                          <i class="fa fa-map-marker text-danger fa-fw"></i>
+                          795 Folsom Ave, Suite 600 San Francisco, CA 94107
+                        </h4>
+                        <p>In hac habitasse platea dictumst. Pellentesque bibendum id sem nec faucibus. Maecenas
+                          molestie, augue vel accumsan rutrum, massa mi rutrum odio, id luctus mauris nibh ut leo.</p>
+                        <p class="m-t-20">
+                          <img src="../assets/img/gallery/gallery-5.jpg" alt="">
+                        </p>
+                      </div>
+                      <div class="timeline-footer">
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a>
+                        <a href="javascript:;" class="m-r-15 text-inverse-lighter"><i
+                            class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a>
+                      </div>
+                    </div>
+                    <!-- end timeline-body -->
+                  </li>
+                  <li>
+                    <!-- begin timeline-icon -->
+                    <div class="timeline-icon">
+                      <a href="javascript:;">&nbsp;</a>
+                    </div>
+                    <!-- end timeline-icon -->
+                    <!-- begin timeline-body -->
+                    <div class="timeline-body">
+                      Loading...
+                    </div>
+                    <!-- begin timeline-body -->
+                  </li>
+                </ul>
+                <!-- end timeline -->
+              </div>
+              <!-- end #profile-post tab -->
+            </div>
+            <!-- end tab-content -->
+          </div>
+          <!-- end profile-content -->
+        </div>
+      </div>
+    </div>
+  </div>
 </body>
+
 </html>

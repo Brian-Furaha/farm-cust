@@ -1,21 +1,3 @@
-<?php ob_start();
-
-@include '../db/conn.php';
-
-session_start();
-$id = $_SESSION['userid'];
-if (!isset($id)) {
-	header('location:../index.php');
-} else {
-
-	$select = " SELECT * FROM user WHERE user_id = '$id'";
-	$result = mysqli_query($conn, $select);
-}
-
-?>
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,6 +5,7 @@ if (!isset($id)) {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MyProducts</title>
   <!-- fontawesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
@@ -36,24 +19,36 @@ if (!isset($id)) {
   <link rel="stylesheet" href="./main.css" />
   <link rel="stylesheet" href="../css/admin.css">
   <link rel="stylesheet" href="../css/nav.css">
-
-  <title>Admin Dashboard</title>
-
 </head>
 
 <body class="bg-gray postion-relative">
   <!-- ================= Appbar ================= -->
-
+  <?php
+  include '../includes/appbar.php';
+  ?>
   <!-- =============== New Chat Mobile =============== -->
-
+  <?php
+  include '../includes/newchatmobile.php';
+  ?>
   <!-- ================= Chat Modal Mobile ================= -->
-
-
+  <?php
+  include '../includes/mobilechat.php'
+  ?>
   <!-- ================= Main ================= -->
   <div class="container-fluid">
     <div class="row justify-content-evenly">
       <!-- ================= Timeline ================= -->
-
+      <?php
+      // if ($post) {
+      //   foreach ($post as $row) {
+      //     $user = new User();
+      //     $row_user = $user->get_user($row['userid']);
+      //     include("../includes/feeds.php");
+      //   }
+      // }
+      // 
+      include '../includes/feeds.php';
+      ?>
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
